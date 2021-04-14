@@ -62,6 +62,23 @@ router.get("/:id", async(req, res) => {
     }
 });
 
+//increase rating on thread
+router.put("/:id", async(req, res) => {
+    try {
+        let thread = await Thread.findOne({
+            _id: req.params.id
+        });
+        if (thread != null) {
+            thread.rating = thread.rating + 1;
+            await thread.save();
+        }
+        return res.sendStatus(200);
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(500);
+    }
+})
+
 module.exports = {
     model: Thread,
     routes: router,

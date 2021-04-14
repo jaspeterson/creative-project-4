@@ -3,12 +3,15 @@
         <div class="thread-container">
             <div class="thread-details">
                 <div class="thread-rating">
-                    <input type="checkbox" v-model="checked" class="vote"/>
+                    <button @click.prevent="increaseRating()" class="pure-button vote-button">+</button>
                     <div class="rating-text">{{ thread.rating }} points</div>
                 </div>
                 <div>{{formatDate(thread.posted)}}</div>
             </div>
-            <p class="thread-text">{{ thread.text }}</p>
+            <div class="thread-main">
+                <h1>{{ thread.topic }}</h1>
+                <p class="thread-text">{{ thread.text }}</p>
+            </div>
         </div>
     </section>
 </template>
@@ -24,8 +27,7 @@ export default ({
     },
     data() {
         return {
-            thread: {},
-            checked: false
+            thread: {}
         }
     },
     created() {
@@ -42,6 +44,14 @@ export default ({
             try {
                 let response = await axios.get("/api/thread/" + this.threadID);
                 this.thread = response.data;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async increaseRating() {
+            try {
+                await axios.put("/api/thread/" + this.threadID);
+                this.getThread();
             } catch (error) {
                 console.log(error);
             }
@@ -63,10 +73,21 @@ export default ({
 .thread-details {
     display: flex;
     flex-direction: column;
-    border: 1px solid black;
+    border: 2px solid black;
     padding: 10px;
     border-radius: 10px;
     justify-content: center;
+}
+
+.thread-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.thread-main h1 {
+    padding: 10px;
+    padding-bottom: 0;
+    margin: 0;
 }
 
 .thread-text {
@@ -83,6 +104,14 @@ export default ({
 
 .rating-text {
     text-align: center;
+}
+
+.vote-button {
+    width: 50%;
+    margin: auto;
+    border: 1px solid black;
+    border-radius: 25%;
+    background-color: white;
 }
 
 .vote {

@@ -9,8 +9,10 @@
                 <button type="submit" class="pure-button pure-button-primary">Post</button>
             </fieldset>
         </form>
-        <div v-for="comment in comments" v-bind:key="comment._id">
-            <comment :comment="comment" />
+        <div class="comment-list">
+            <div v-for="comment in comments" v-bind:key="comment._id">
+                <comment :comment="comment" />
+            </div>
         </div>
     </div>
 </template>
@@ -75,5 +77,8 @@ export default ({
 </script>
 
 <style scoped>
-
+.comment-list {
+    width: 80%;
+    margin: auto;
+}
 </style>

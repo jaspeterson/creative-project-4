@@ -68,4 +68,9 @@ export default {
   text-decoration: none;
   color: black;
 }
+
+.thread-list {
+  width: 80%;
+  margin: auto;
+}
 </style>
