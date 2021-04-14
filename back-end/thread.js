@@ -17,7 +17,8 @@ const threadSchema = new mongoose.Schema({
     posted: {
         type: Date,
         default: Date.now
-    }
+    },
+    topic: String
 });
 
 const Thread = mongoose.model('Thread', threadSchema);
