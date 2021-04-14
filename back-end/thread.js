@@ -55,7 +55,7 @@ router.get("/:id", async(req, res) => {
         let thread = await Thread.findOne({
             _id: req.params.id
         });
-        return res.send(thread.data);
+        return res.send(thread);
     } catch (error) {
         console.log(error);
         return res.sendStatus(500);
