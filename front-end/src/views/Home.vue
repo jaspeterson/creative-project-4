@@ -4,7 +4,7 @@
     <form class="pure-form" @submit.prevent="postThread">
       <fieldset>
         <legend>Post a thread</legend>
-        <textarea placeholder="Thread content" v-model="threadText" />
+        <textarea class="pure-u-1-2" placeholder="Thread content" v-model="threadText" />
         <button type="submit" class="pure-button pure-button-primary" @click.prevent="postThread">Post</button>
       </fieldset>
     </form>
@@ -12,7 +12,7 @@
     <!-- thread list -->
     <div class="thread-list">
       <div v-for="thread in threads" v-bind:key="thread._id">
-        <router-link :to="{ name: 'Thread', params: { id: thread._id }}" class="thread-link"><thread-view :threadID=thread._id /></router-link>
+        <router-link :to="{ name: 'ThreadView', params: { id: thread._id }}" class="thread-link"><thread :threadID=thread._id /></router-link>
       </div>
     </div>
   </div>
@@ -20,10 +20,10 @@
 
 <script>
 import axios from 'axios';
-import ThreadView from '../components/ThreadView.vue';
+import Thread from '../components/Thread.vue';
 
 export default {
-  components: { ThreadView },
+  components: { Thread },
   name: "Home",
   data() {
     return {

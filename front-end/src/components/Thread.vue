@@ -1,6 +1,6 @@
 <template>
-    <section class="thread-view">
-        <div class="thread">
+    <section class="thread">
+        <div class="thread-container">
             <div class="thread-details">
                 <div class="thread-rating">
                     <input type="checkbox" v-model="checked" class="vote"/>
@@ -18,7 +18,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 export default ({
-    name: 'ThreadView',
+    name: 'Thread',
     props: {
         threadID: String
     },
@@ -51,7 +51,7 @@ export default ({
 </script>
 
 <style scoped>
-.thread {
+.thread-container {
     box-shadow: 5px 5px 10px 2px gray;
     padding: 10px;
     margin: 20px;

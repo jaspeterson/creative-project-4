@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import Thread from "../views/Thread.vue";
+import ThreadView from "../views/ThreadView.vue";
 
 Vue.use(VueRouter);
 
@@ -13,8 +13,8 @@ const routes = [
   },
   {
     path: "/thread/:id",
-    name: "Thread",
-    component: Thread,
+    name: "ThreadView",
+    component: ThreadView,
     props: true
   }
 ];
