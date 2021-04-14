@@ -5,8 +5,6 @@
     // Topic? -- maybe add later
     // List of comments? -- probably not
 
-
-
 const mongoose = require('mongoose');
 const express = require("express");
 const router = express.Router();
@@ -24,19 +22,44 @@ const threadSchema = new mongoose.Schema({
 const Thread = mongoose.model('Thread', threadSchema);
 
 //post a thread
-//get all threads
-//get one thread
-
 router.post("/", async(req, res) => {
+    const thread = new Thread({
+        text: req.body.text,
+        rating: 0,
+        topic: req.body.topic,
+    });
 
+    try {
+        await thread.save();
+        return res.sendStatus(200);
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(500);
+    }
 });
 
+//get all threads
 router.get("/", async(req, res) => {
-
+    try {
+        let threads = await Thread.find();
+        return res.send(threads);
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(500);
+    }
 });
 
+//get one thread
 router.get("/:id", async(req, res) => {
-
+    try {
+        let thread = await Thread.findOne({
+            _id: req.params.id
+        });
+        return res.send(thread.data);
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(500);
+    }
 });
 
 module.exports = {
