@@ -1,7 +1,7 @@
 <template>
     <div>
         <thread :threadID=id />
-        <h1>Comments</h1>
+        <h2>Comments</h2>
         <hr>
         <form class="pure-form" @submit.prevent="postComment">
             <fieldset>

@@ -22,6 +22,8 @@
     </form>
 
     <!-- thread list -->
+    <h2>Threads</h2>
+    <hr>
     <div class="thread-list">
       <div v-for="thread in filteredThreads" v-bind:key="thread._id">
         <router-link :to="{ name: 'ThreadView', params: { id: thread._id }}" class="thread-link"><thread :threadID=thread._id /></router-link>
