@@ -4,14 +4,26 @@
     <form class="pure-form" @submit.prevent="postThread">
       <fieldset>
         <legend>Post a thread</legend>
+        <input class="pure-u-1-5 topic-post" placeholder="Thread topic" v-model="threadTopic"/>
+        <br>
         <textarea class="pure-u-1-2" placeholder="Thread content" v-model="threadText" />
-        <button type="submit" class="pure-button pure-button-primary" @click.prevent="postThread">Post</button>
+        <button type="submit" class="pure-button pure-button-primary buttons" @click.prevent="postThread">Post</button>
       </fieldset>
     </form>
     <!-- filter bar -->
+    <form class="pure-form" @submit.prevent="filterThreads">
+      <fieldset>
+        <legend>Filter by topic</legend>
+        <select class="topic-select pure-u-1-3" v-model="filteredTopic" value="filteredTopic">
+          <option v-for="topic in topics" v-bind:key="topic">{{ topic }}</option>
+        </select>
+        <button class="pure-button pure-button-secondary buttons" @click.prevent="clearFilter">Clear</button>
+      </fieldset>
+    </form>
+
     <!-- thread list -->
     <div class="thread-list">
-      <div v-for="thread in threads" v-bind:key="thread._id">
+      <div v-for="thread in filteredThreads" v-bind:key="thread._id">
         <router-link :to="{ name: 'ThreadView', params: { id: thread._id }}" class="thread-link"><thread :threadID=thread._id /></router-link>
       </div>
     </div>
@@ -28,9 +40,9 @@ export default {
   data() {
     return {
       threads: [],
-      topics: [],
       filteredTopic: '',
-      threadText: ''
+      threadText: '',
+      threadTopic: ''
     }
   },
   created() {
@@ -51,13 +63,41 @@ export default {
       try {
         await axios.post("/api/thread", {
           text: this.threadText,
-          topic: 'Testing'
+          topic: this.threadTopic
         });
+
+        this.threadText = '';
+        this.threadTopic = '';
 
         this.getThreadList();
       } catch (error) {
         console.log(error);
       }
+    },
+    clearFilter() {
+      this.filteredTopic = '';
+    }
+  },
+  computed: {
+    topics() {
+      let topics = new Set();
+      this.threads.forEach(thread => {
+        topics = topics.add(thread.topic);
+      });
+      return Array.from(topics);
+    },
+    filteredThreads() {
+      let threads = [];
+      if (this.filteredTopic == '') {
+        threads = this.threads;
+      } else {
+        this.threads.forEach(thread => {
+        if (thread.topic == this.filteredTopic)
+          threads.push(thread);
+        });
+      }
+      threads.sort((a, b) => b.rating - a.rating);
+      return threads;
     }
   }
 };
@@ -72,5 +112,13 @@ export default {
 .thread-list {
   width: 80%;
   margin: auto;
+}
+
+.topic-post {
+  margin-bottom: 10px;
+}
+
+.buttons {
+  margin: 10px;
 }
 </style>

@@ -6,7 +6,7 @@
         <form class="pure-form" @submit.prevent="postComment">
             <fieldset>
                 <textarea class="pure-u-1-2" placeholder="Comment" v-model="commentText" />
-                <button type="submit" class="pure-button pure-button-primary">Post</button>
+                <button type="submit" class="pure-button pure-button-primary buttons">Post</button>
             </fieldset>
         </form>
         <div class="comment-list">
@@ -80,5 +80,9 @@ export default ({
 .comment-list {
     width: 80%;
     margin: auto;
+}
+
+.buttons {
+  margin: 10px;
 }
 </style>
